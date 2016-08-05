@@ -1,31 +1,31 @@
 
 Import-Module WebAdministration
-
 #Change the below Variables 
 $siteName = ""
 $siteDirectory = ""
 $siteUrl = ""
 $appPoolUsername = ""
 $appPoolPassword = ""
-$mediaFolderPath = ""
 
-
+#$mediaFolderPath = "\\omc-nas-303\TEAM-FOLDERS\Portal-Builds\DEV-WWWSHARE\cwo.foundation.cms\media\"
 #Code below will setup iis for the detail above
 $currentDir = (Get-Item -Path ".\" -Verbose).FullName
 $rootDirectory = (Get-Item $currentDir).Parent.FullName 
 $projectDirectory = Join-Path $rootDirectory $siteDirectory
+
 $apppool = "IIS:\apppools\$siteName"
 $iissite = "IIS:\sites\$siteName"
 
 #Create the App Pool for the site
 If (-Not (Test-Path $apppool)) {
-	New-Item $apppool
-	$appPool = Get-Item $apppool 
-    $appPool.processModel.userName = $appPoolUsername
-    $appPool.processModel.password = $appPoolPassword
-    $appPool.processModel.identityType = 3
-    $appPool | Set-Item
+	New-Item $apppool	
 }
+$appPool = Get-Item $apppool 
+$appPool.processModel.userName = $appPoolUsername
+$appPool.processModel.password = $appPoolPassword
+$appPool.processModel.identityType = 3
+$appPool | Set-Item
+
 
 #Check if the site exists in IIS
 If (-Not (Test-Path $iissite)) {
@@ -41,11 +41,11 @@ Clear-ItemProperty $iissite -Name bindings
 
 #Add the new bindings
 New-WebBinding -Name $siteName -IPAddress "*" -Port 80 -HostHeader $siteUrl
-
+<#
 $iisMediaFolder = "$iissite\media"
-
 If (-Not (Test-Path $iisMediaFolder)) {
     New-Item $iisMediaFolder -type VirtualDirectory -PhysicalPath $mediaFolderPath
 }else{
     Set-ItemProperty $iisMediaFolder -name physicalPath -value $mediaFolderPath
 }
+#>
