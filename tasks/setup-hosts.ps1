@@ -1,7 +1,5 @@
-$siteName = ""
-$siteHosts = @()
+. ./setup-variables.ps1
 
-#DO NOT EDIT BELOW HERE
 $hostsPath = "$env:windir\System32\drivers\etc\hosts"
 $hosts = (get-content $hostsPath) -join "`n"
 $sectionStartMarker = "#MARKER -- $siteName --"
@@ -16,11 +14,12 @@ if(-Not ($hosts -match $sectionStartMarker)){
     $hosts = $hosts -replace "$sectionStartMarker[.|\s|\w|\-]*$endStartMarker"
 }
 
-$sitesData = $sectionStartMarker
+$sitesData = -join "`n", $sectionStartMarker
 $sitesData = -join $sitesData, "`n"
 Foreach($site in $siteHosts){
     $sitesData = -join $sitesData, "127.0.0.1`t$site`n"
 }
+
 $sitesData = -join $sitesData, $endStartMarker
 $sitesData = -join $sitesData , "`n"
 $hosts = "$hosts $sitesData"
