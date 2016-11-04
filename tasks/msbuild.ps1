@@ -1,12 +1,9 @@
 . ./setup-variables.ps1
 
 #$msbuild = "C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe"
-
+nuget restore
 
 $msbuild = $env:systemroot + "\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
-
-
-
 $options = "/p:Configuration=release,VisualStudioVersion=14.0 /v:minimal"
 
 $solutionPath = Join-Path $projectDirectory $solutionName

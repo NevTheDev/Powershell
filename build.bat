@@ -4,6 +4,9 @@
 
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& './git-update.ps1'"
 
+
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& './nuget.ps1'"
+
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& './msbuild.ps1'"
 
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& './gulp.ps1'"
