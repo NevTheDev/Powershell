@@ -24,5 +24,5 @@ $sitesData = -join $sitesData, $endStartMarker
 $sitesData = -join $sitesData , "`n"
 $hosts = "$hosts $sitesData"
 
-Out-File $hostsPath -inputobject $hosts
+Out-File $hostsPath -inputobject $hosts -Encoding ascii
  
