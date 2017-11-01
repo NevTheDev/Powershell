@@ -8,8 +8,8 @@ $siteDirectory = "testing"
 $solutionName = "testing.web.ui.sln"
 
 ##Application Pool Username and Password that the site will run under 
-$appPoolUsername = "omc\portal"
-$appPoolPassword = "P@55word"
+$appPoolUsername = ""
+$appPoolPassword = ""
 
 #List of any host names that need to be added as site binding and into the hosts file
 $siteHosts = @(
