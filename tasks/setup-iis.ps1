@@ -42,6 +42,11 @@ If($mediaFolderPath){
     }
 }
 
-Write-Output $siteName
-
-Start-WebSite $siteName
+## Set any virtual directory to run under the app pool user
+$virtualDirs = Get-WebVirtualDirectory -site $siteName
+ForEach($vdir in $virtualDirs){
+    $xpath = ($vdir | Select -Property "ItemXPath").ItemXPath
+    $fullPath = $xpath.Substring(1)
+    Set-WebConfigurationProperty $fullPath -Name "username" -Value $appPoolUsername
+    Set-WebConfigurationProperty $fullPath -Name "password" -Value $appPoolPassword
+}
